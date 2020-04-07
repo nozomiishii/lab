@@ -2,7 +2,7 @@ const {
   Button,
   Box,
   createMuiTheme,
-  createStyles,
+  // createStyles,
   makeStyles,
   ThemeProvider,
   useMediaQuery,
@@ -25,35 +25,33 @@ const theme = createMuiTheme({
   },
 });
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    main: {
-      ...theme.centerize,
-      background: "#9ADF66",
-      height: "100vh",
-      width: "100vw",
+const useStyles = makeStyles((theme) => ({
+  main: {
+    ...theme.centerize,
+    background: "#9ADF66",
+    height: "100vh",
+    width: "100vw",
+  },
+  speak: {
+    color: theme.palette.error.light,
+    textAlign: "center",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "0.5em",
     },
-    speak: {
-      color: theme.palette.error.light,
-      textAlign: "center",
-      [theme.breakpoints.down("md")]: {
-        fontSize: "0.5em",
-      },
-    },
-    dinosaurBox: {
-      ...theme.centerize,
-      fontSize: "5rem",
-    },
-    dinosaur: {
-      // display: "block",
-      animation: "$move 1s infinite linear alternate",
-    },
-    "@keyframes move": {
-      "0%": { transform: "translateX(-10px)" },
-      "100%": { transform: "translateX(10px)" },
-    },
-  })
-);
+  },
+  dinosaurBox: {
+    ...theme.centerize,
+    fontSize: "5rem",
+  },
+  dinosaur: {
+    // display: "block",
+    animation: "$move 1s infinite linear alternate",
+  },
+  "@keyframes move": {
+    "0%": { transform: "translateX(-10px)" },
+    "100%": { transform: "translateX(10px)" },
+  },
+}));
 
 const App = () => {
   const [speech, setSpeech] = React.useState(false);
