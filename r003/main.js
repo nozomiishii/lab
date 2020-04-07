@@ -1,4 +1,3 @@
 const App = () => <div>🦕{"{"}react)!!!</div>;
 
-const target = document.getElementById("app");
-ReactDOM.render(<App />, target);
+ReactDOM.render(<App />, document.getElementById("app"));
