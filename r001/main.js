@@ -1,4 +1,12 @@
-const { Button, Box, createMuiTheme, makeStyles, ThemeProvider } = MaterialUI;
+const {
+  Button,
+  Box,
+  createMuiTheme,
+  createStyles,
+  makeStyles,
+  ThemeProvider,
+  useMediaQuery,
+} = MaterialUI;
 
 const theme = createMuiTheme({
   palette: {
@@ -17,23 +25,40 @@ const theme = createMuiTheme({
   },
 });
 
-const useStyle = makeStyles((theme) => ({
-  main: {
-    ...theme.centerize,
-    background: "#9ADF66",
-    height: "100vh",
-    width: "100vw",
-  },
-  dinosaur: {
-    ...theme.centerize,
-    fontSize: "4rem",
-  },
-}));
+const useStyle = makeStyles((theme) =>
+  createStyles({
+    main: {
+      ...theme.centerize,
+      background: "#9ADF66",
+      height: "100vh",
+      width: "100vw",
+    },
+    speak: {
+      color: theme.palette.error.light,
+      textAlign: "center",
+      [theme.breakpoints.down("md")]: {
+        fontSize: "0.5em",
+      },
+    },
+    dinosaurBox: {
+      ...theme.centerize,
+      fontSize: "5rem",
+    },
+    dinosaur: {
+      // display: "block",
+      animation: "$move 1s infinite linear alternate",
+    },
+    "@keyframes move": {
+      "0%": { transform: "translateX(-10px)" },
+      "100%": { transform: "translateX(10px)" },
+    },
+  })
+);
 
 const App = () => {
   const [speech, setSpeech] = React.useState(false);
 
-  const comment = "ya man!　\n let's get started React Lab!!!";
+  const comment = "Ya man!\nlet's get started React Lab!!!";
   const handleClick = () => {
     setSpeech(!speech);
   };
@@ -41,9 +66,9 @@ const App = () => {
   const classes = useStyle();
   return (
     <div className={classes.main}>
-      <Box className={classes.dinosaur}>
-        <p>{speech ? comment : "..."}</p>
-        <h1>🦕</h1>
+      <Box className={classes.dinosaurBox}>
+        <p className={classes.speak}>{speech ? comment : "..."}</p>
+        <h1 className={classes.dinosaur}>🦕</h1>
       </Box>
       <Button variant="contained" color="primary" onClick={handleClick}>
         Hey!
