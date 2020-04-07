@@ -1,4 +1,4 @@
-const { Button, createMuiTheme, makeStyles, ThemeProvider } = MaterialUI;
+const { Button, Box, createMuiTheme, makeStyles, ThemeProvider } = MaterialUI;
 
 const theme = createMuiTheme({
   palette: {
@@ -9,19 +9,23 @@ const theme = createMuiTheme({
       main: "#FFD84C",
     },
   },
+  centerize: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 });
 
 const useStyle = makeStyles((theme) => ({
   main: {
-    width: "100vw",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "solid 1px red",
+    ...theme.centerize,
+    background: "#9ADF66",
     height: "100vh",
+    width: "100vw",
   },
   dinosaur: {
+    ...theme.centerize,
     fontSize: "4rem",
   },
 }));
@@ -29,20 +33,18 @@ const useStyle = makeStyles((theme) => ({
 const App = () => {
   const [speech, setSpeech] = React.useState(false);
 
-  const comment = "ya man! let's get started React Lab!!!";
+  const comment = "ya man!　\n let's get started React Lab!!!";
   const handleClick = () => {
-    console.log("click");
-    console.log(speech);
     setSpeech(!speech);
   };
 
   const classes = useStyle();
   return (
     <div className={classes.main}>
-      <div className={classes.dinosaur}>
-        🦕{"{"}
-        {speech ? comment : "..."})
-      </div>
+      <Box className={classes.dinosaur}>
+        <p>{speech ? comment : "..."}</p>
+        <h1>🦕</h1>
+      </Box>
       <Button variant="contained" color="primary" onClick={handleClick}>
         Hey!
       </Button>
