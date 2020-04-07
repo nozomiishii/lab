@@ -2,7 +2,6 @@ const {
   Button,
   Box,
   createMuiTheme,
-  // createStyles,
   makeStyles,
   ThemeProvider,
   useMediaQuery,
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   speak: {
     color: theme.palette.error.light,
+    animation: "$painting 1s infinite linear alternate",
     textAlign: "center",
     [theme.breakpoints.down("md")]: {
       fontSize: "0.5em",
@@ -42,14 +42,20 @@ const useStyles = makeStyles((theme) => ({
   dinosaurBox: {
     ...theme.centerize,
     fontSize: "5rem",
+    fontWeight: "900",
   },
   dinosaur: {
-    // display: "block",
+    display: "block",
     animation: "$move 1s infinite linear alternate",
   },
   "@keyframes move": {
     "0%": { transform: "translateX(-10px)" },
     "100%": { transform: "translateX(10px)" },
+  },
+  "@keyframes painting": {
+    "0%": { color: theme.palette.error.light },
+    "50%": { color: theme.palette.info.light },
+    "100%": { color: theme.palette.warning.main },
   },
 }));
 
