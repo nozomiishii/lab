@@ -25,7 +25,7 @@ const theme = createMuiTheme({
   },
 });
 
-const useStyle = makeStyles((theme) =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     main: {
       ...theme.centerize,
@@ -63,7 +63,7 @@ const App = () => {
     setSpeech(!speech);
   };
 
-  const classes = useStyle();
+  const classes = useStyles();
   return (
     <div className={classes.main}>
       <Box className={classes.dinosaurBox}>
