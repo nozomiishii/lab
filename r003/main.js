@@ -1,54 +1,88 @@
-const { Button, makeStyles, ThemeProvider, Grid } = MaterialUI;
+const { Button, createMuiTheme, makeStyles, ThemeProvider, Grid } = MaterialUI;
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#4BD6E1",
+    },
+    secondary: {
+      main: "#FFD84C",
+    },
+  },
+});
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: "0 auto",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%)",
+    width: "100vw",
     maxWidth: "800px",
+  },
+  out: {
+    width: "100%",
+    display: "block",
+    animation: "$getout 1s linear both",
+  },
+  "@keyframes getout": {
+    "0%": { transform: "translateY(10px)" },
+    "50%": { transform: "translateY(-500px)" },
+    "100%": { transform: "translateX(50px)", display: "none" },
   },
 }));
 
-const CustomButton = () => {
+const CustomButton = (props) => {
   const [buttonColor, setBottonColor] = React.useState("default");
-  const [sensor, setSensor] = React.useState(0);
-  const colors = ["primary", "secondary"];
-  const handleClick = () => {
-    let random = Math.floor(Math.random() * colors.length);
-    setBottonColor(colors[random]);
-    setSensor(sensor === 0 ? 1 : 0);
-    console.log(sensor);
-    const changeColor = setInterval(() => {
-      let random = Math.floor(Math.random() * colors.length);
-      setBottonColor(colors[random]);
-      if (sensor === 1) {
-        clearInterval(changeColor);
-        setBottonColor("default");
-      }
-    }, 1000);
+  // const [flashOn, setFlash] = React.useState(false);
+  const classes = useStyles();
+  const handleClick = (e) => {
+    e.target.classList.add(classes.out);
+    props.handleSwich();
+    console.log(e.target);
+    // setFlash(!flashOn);
+    // const flashColor = setInterval(() => {
+    //   const colors = ["primary", "secondary"];
+    //   let random = Math.floor(Math.random() * colors.length);
+    //   setBottonColor(colors[random]);
+    //   if (flashOn === false) {
+    //     clearInterval(flashColor);
+    //     setBottonColor("default");
+    //   }
+    // }, 100);
   };
 
-  // React.useEffect(() => {
-  //   const changeColor = setInterval(() => {
-  //     let random = Math.floor(Math.random() * colors.length);
-  //     setBottonColor(colors[random]);
-  //   }, 1000);
-  //   return () => clearInterval(changeColor);
-  // }, [sensor]);
+  React.useEffect(() => {
+    let random = Math.floor(Math.random() * colors.length);
+    setBottonColor(colors[random]);
+  }, [props.sensor]);
+
+  const colors = ["primary", "secondary"];
 
   return (
-    <Button variant="contained" color={buttonColor} onClick={handleClick}>
-      btn
+    <Button
+      variant="contained"
+      color={buttonColor}
+      onClick={(e) => handleClick(e)}
+    >
+      {buttonColor === "primary" ? "🥶" : "🥵"}
     </Button>
   );
 };
 
 const App = () => {
   const classes = useStyles();
-  let items = [];
+  const [sensor, setSensor] = React.useState(false);
 
+  const handleSwich = () => {
+    setSensor(!sensor);
+  };
+
+  let items = [];
   for (let i = 0; i < 12 * 12; i++) {
     items.push(
-      <Grid item key={i} xs={1}>
-        <CustomButton />
+      <Grid item key={i} xs={2} md={1}>
+        <CustomButton sensor={sensor} handleSwich={handleSwich} />
       </Grid>
     );
   }
@@ -62,4 +96,9 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <ThemeProvider theme={theme}>
+    <App />
+  </ThemeProvider>,
+  document.getElementById("app")
+);

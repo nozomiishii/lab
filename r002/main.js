@@ -9,11 +9,30 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomButton = () => {
   const [buttonColor, setBottonColor] = React.useState("default");
+  const [sensor, setSensor] = React.useState(0);
   const colors = ["primary", "secondary"];
   const handleClick = () => {
     let random = Math.floor(Math.random() * colors.length);
     setBottonColor(colors[random]);
+    setSensor(sensor === 0 ? 1 : 0);
+    console.log(sensor);
+    const changeColor = setInterval(() => {
+      let random = Math.floor(Math.random() * colors.length);
+      setBottonColor(colors[random]);
+      if (sensor === 1) {
+        clearInterval(changeColor);
+        setBottonColor("default");
+      }
+    }, 100);
   };
+
+  // React.useEffect(() => {
+  //   const changeColor = setInterval(() => {
+  //     let random = Math.floor(Math.random() * colors.length);
+  //     setBottonColor(colors[random]);
+  //   }, 1000);
+  //   return () => clearInterval(changeColor);
+  // }, [sensor]);
 
   return (
     <Button variant="contained" color={buttonColor} onClick={handleClick}>
