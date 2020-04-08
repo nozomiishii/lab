@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     width: "100vw",
     maxWidth: "800px",
   },
+  fallBox: {
+    animation: "$fall 3s both linear",
+  },
   out: {
     width: "100%",
     display: "block",
@@ -30,25 +33,21 @@ const useStyles = makeStyles((theme) => ({
     "50%": { transform: "translateY(-500px)" },
     "100%": { transform: "translateX(50px)", display: "none" },
   },
+  "@keyframes fall": {
+    "0%": { top: "-100%" },
+    "70%": { top: "60%" },
+    "80%": { top: "40%" },
+    "90%": { top: "55%" },
+    "100%": { top: "50%" },
+  },
 }));
 
 const CustomButton = (props) => {
   const [buttonColor, setBottonColor] = React.useState("default");
-  // const [flashOn, setFlash] = React.useState(false);
   const classes = useStyles();
   const handleClick = (e) => {
     props.handleSwich();
     console.log(e.target);
-    // setFlash(!flashOn);
-    // const flashColor = setInterval(() => {
-    //   const colors = ["primary", "secondary"];
-    //   let random = Math.floor(Math.random() * colors.length);
-    //   setBottonColor(colors[random]);
-    //   if (flashOn === false) {
-    //     clearInterval(flashColor);
-    //     setBottonColor("default");
-    //   }
-    // }, 100);
   };
 
   React.useEffect(() => {
@@ -80,6 +79,10 @@ const App = () => {
     setSensor(!sensor);
   };
 
+  React.useEffect(() => {
+    const btnBox = document.getElementById("btnBox");
+    btnBox.classList.add(classes.fallBox);
+  }, []);
   let items = [];
   for (let i = 0; i < 12 * 12; i++) {
     items.push(
@@ -90,7 +93,7 @@ const App = () => {
   }
 
   return (
-    <div className={classes.container}>
+    <div id="btnBox" className={classes.container}>
       <Grid container justify="space-around">
         {items}
       </Grid>
