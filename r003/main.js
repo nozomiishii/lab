@@ -37,7 +37,6 @@ const CustomButton = (props) => {
   // const [flashOn, setFlash] = React.useState(false);
   const classes = useStyles();
   const handleClick = (e) => {
-    e.target.classList.add(classes.out);
     props.handleSwich();
     console.log(e.target);
     // setFlash(!flashOn);
@@ -63,7 +62,10 @@ const CustomButton = (props) => {
     <Button
       variant="contained"
       color={buttonColor}
-      onClick={(e) => handleClick(e)}
+      onClick={(e) => {
+        handleClick(e);
+        e.target.classList.add(classes.out);
+      }}
     >
       {buttonColor === "primary" ? "🥶" : "🥵"}
     </Button>
