@@ -7,33 +7,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const btnReducer = (state, action) => {
-  switch (action.type) {
-    case "TOGGLE_CHECK":
-      return { checkClicked: action.checkClicked };
-    default:
-      return state;
-  }
-};
-
 const CustomButton = () => {
   const [buttonColor, setBottonColor] = React.useState("default");
-  const [checkClicked, dispatch] = React.useReducer(btnReducer, true);
-
-  const colors = ["primary", "secondary", "default"];
+  const colors = ["primary", "secondary"];
   const handleClick = () => {
-    console.log(checkClicked);
-    dispatch({
-      type: "TOGGLE_CHECK",
-      checkClicked: !checkClicked,
-    });
-  };
-
-  React.useEffect(() => {
-    console.log("effect");
     let random = Math.floor(Math.random() * colors.length);
     setBottonColor(colors[random]);
-  }, [checkClicked]);
+  };
 
   return (
     <Button variant="contained" color={buttonColor} onClick={handleClick}>
@@ -43,8 +23,6 @@ const CustomButton = () => {
 };
 
 const App = () => {
-  const btnContext = React.createContext();
-  const [checkClicked, dispatch] = React.useReducer(btnReducer, true);
   const classes = useStyles();
   let items = [];
 
@@ -57,14 +35,11 @@ const App = () => {
   }
 
   return (
-    <btnContext.Provider
-      className={classes.container}
-      value={{ checkClicked, dispatch }}
-    >
+    <div className={classes.container}>
       <Grid container justify="space-around">
         {items}
       </Grid>
-    </btnContext.Provider>
+    </div>
   );
 };
 
