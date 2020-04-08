@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
   out: {
     width: "100%",
-    display: "block",
     animation: "$getout 10s linear both",
   },
   "@keyframes getout": {
