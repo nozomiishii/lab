@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
 const R = 5;
 const App = () => {
   const pages = [];
