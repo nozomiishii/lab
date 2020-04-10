@@ -14,7 +14,7 @@ const R000 = () => {
     }
     pages.push(
       <div key={`/r${num}`}>
-        <Link href={`/r${num}`}>{i}</Link>
+        <Link to={`/r${num}`}>{i}</Link>
       </div>
     );
   }
