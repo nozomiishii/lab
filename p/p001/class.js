@@ -8,13 +8,13 @@ class Animal {
   }
   show() {
     push();
-    frameRate(6);
+    // frameRate(6);
     textSize(this.size);
     translate(this.x, this.y);
     rotate(this.angle);
     textAlign(CENTER);
     text(this.icon, 0, 0);
-    this.angle += 0.1;
+    this.angle += 0.01;
     pop();
   }
 }
