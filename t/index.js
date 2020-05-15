@@ -8,6 +8,6 @@
 var add = function (a, b) {
     return a + b;
 };
-var number1 = 5099;
+var number1 = "ndfa";
 var number2 = 5820384952;
 console.log(add(number1, number2));

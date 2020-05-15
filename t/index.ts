@@ -8,7 +8,7 @@
 
 // btn.addEventListener("click", () => addNum(+input1.value, +input2.value));
 
-const add = (a, b) => {
+const add = (a: number, b: number) => {
   return a + b;
 };
 
