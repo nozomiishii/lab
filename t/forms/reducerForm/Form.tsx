@@ -1,21 +1,30 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import { login } from "./Login";
 
-const StyledForm = styled.form`
-  margin: 0 auto;
-  width: 60%;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  padding: 5vw;
-  > * {
-    margin: 5px;
-    padding: 10px;
-  }
-`;
+const initialState: LoginState = {
+  username: "",
+  password: "",
+  isLoading: false,
+  error: "",
+  isLoggedIn: false,
+  variant: "login",
+};
 
-function loginReducer(state: any, action: any) {
+interface LoginState {
+  username: string;
+  password: string;
+  isLoading: boolean;
+  error: string;
+  isLoggedIn: boolean;
+  variant: "login" | "forgetPassword";
+}
+
+type LoginAction =
+  | { type: "login" | "success" | "error" | "logout" }
+  | { type: "field"; field: string; value: string };
+
+function loginReducer(state: LoginState, action: LoginAction) {
   switch (action.type) {
     case "field": {
       return {
@@ -59,20 +68,25 @@ function loginReducer(state: any, action: any) {
   return state;
 }
 
-const initialState = {
-  username: "",
-  password: "",
-  isLoading: false,
-  error: "",
-  isLoggedIn: false,
-};
+const StyledForm = styled.form`
+  margin: 0 auto;
+  width: 60%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 5vw;
+  > * {
+    margin: 5px;
+    padding: 10px;
+  }
+`;
 
 export const Form = () => {
   const [state, dispatch] = useReducer(loginReducer, initialState);
 
   const { username, password, isLoading, error, isLoggedIn } = state;
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     dispatch({ type: "login" });
