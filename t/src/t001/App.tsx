@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
+import { Modal } from "../components";
 
 const overgrow = keyframes`
   0%{
@@ -12,10 +13,13 @@ const overgrow = keyframes`
 
 const shake = keyframes`
   0%{
-    transform: scale(1)
+    transform: scale(1) rotate(0deg);
+  }
+  50%{
+    transform: scale(0.5) rotate(180deg);
   }
   100%{
-    transform: scale(1.5)
+    transform: scale(1.5) rotate(360deg);
   }
 `;
 
@@ -26,7 +30,7 @@ const Field = styled.div`
   animation: ${overgrow} 3s infinite alternate linear;
 `;
 
-const Box = styled.div<{ onSize: number }>`
+const Box = styled.div<{ size: number }>`
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -35,8 +39,8 @@ const Box = styled.div<{ onSize: number }>`
   user-select: none;
   span {
     display: inline-block;
-    font-size: ${({ onSize }) => onSize + "rem"};
-    animation: ${shake} 1s infinite alternate;
+    font-size: ${({ size }) => size + "rem"};
+    animation: ${shake} 4s infinite linear both alternate;
   }
 `;
 
@@ -44,13 +48,16 @@ const App = () => {
   const [count, setCount] = useState(3);
 
   return (
-    <Field>
-      <Box onClick={() => setCount((prev) => prev + 1)} onSize={count}>
-        <span role="img" aria-label="img">
-          🦕
-        </span>
-      </Box>
-    </Field>
+    <>
+      <Modal title="React Lab" />
+      <Field>
+        <Box onClick={() => setCount((prev) => prev + 1)} size={count}>
+          <span role="img" aria-label="img">
+            🦕
+          </span>
+        </Box>
+      </Field>
+    </>
   );
 };
 
