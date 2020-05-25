@@ -10,6 +10,15 @@ const overgrow = keyframes`
   }
 `;
 
+const shake = keyframes`
+  0%{
+    transform: scale(1)
+  }
+  100%{
+    transform: scale(1.5)
+  }
+`;
+
 const Field = styled.div`
   position: relative;
   width: 100vw;
@@ -17,13 +26,30 @@ const Field = styled.div`
   animation: ${overgrow} 3s infinite alternate linear;
 `;
 
+const Box = styled.div<{ onSize: number }>`
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  span {
+    display: inline-block;
+    font-size: ${({ onSize }) => onSize + "rem"};
+    animation: ${shake} 1s infinite alternate;
+  }
+`;
+
 const App = () => {
-  // const [count, setCount] = useState(0);
+  const [count, setCount] = useState(3);
+
   return (
     <Field>
-      <span role="img" aria-label="img">
-        🦕
-      </span>
+      <Box onClick={() => setCount((prev) => prev + 1)} onSize={count}>
+        <span role="img" aria-label="img">
+          🦕
+        </span>
+      </Box>
     </Field>
   );
 };
